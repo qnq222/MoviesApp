@@ -97,6 +97,10 @@ struct MovieCollectionView: UIViewRepresentable {
             return UICollectionViewCell()
         }
         
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            parent.didSelectItem(indexPath)
+        }
+        
         func createCompositionalLayout() -> UICollectionViewLayout {
             let layout = UICollectionViewCompositionalLayout{[weak self] index, environment in
                 switch index{
@@ -164,6 +168,9 @@ struct MovieCollectionView: UIViewRepresentable {
             case UICollectionView.elementKindSectionHeader:
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as? HeaderView else { return UICollectionReusableView() }
                 header.headerName.text =  HomeSection.allCases[indexPath.section].rawValue
+                header.onSeeAllClicked = { [weak self] in
+                    self?.parent.seeAllforSection(HomeSection.allCases[indexPath.section])
+                }
                 return header
             default:
                 return UICollectionReusableView()

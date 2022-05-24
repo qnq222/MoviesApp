@@ -9,14 +9,17 @@ import UIKit
 
 class HeaderView: UICollectionReusableView {
     
+    var onSeeAllClicked = {}
+    
     lazy var headerName: UILabel = {
         let label = UILabel()
-        
         return label
     }()
     
     lazy var seeAll: UILabel = {
         let label = UILabel()
+        label.text = "See All"
+        label.textColor = UIColor(named: "darkPurple")
         return label
     }()
     
@@ -52,6 +55,6 @@ class HeaderView: UICollectionReusableView {
     }
     
     @objc func didTap() {
-        
+        self.onSeeAllClicked()
     }
 }
