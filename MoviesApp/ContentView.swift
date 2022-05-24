@@ -8,10 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject private var model = MovieViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        let movieCollectionView = createCollectionView().edgesIgnoringSafeArea(.all).navigationBarTitle("Movies")
+
+        return NavigationView {
+            movieCollectionView
+        }
     }
+    
+    fileprivate func createCollectionView() -> MovieCollectionView {
+        return MovieCollectionView(allItems: model.allItems, didSelectItem: { indexPath in }, seeAllforSection: { section in })
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
