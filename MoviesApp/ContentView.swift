@@ -49,6 +49,7 @@ struct ContentView: View {
                     if self.section == HomeSection.Actors {
                         ActorListView(actors: actors, section: .Actors)
                     }
+                    
                 }  else {
                     if self.section == HomeSection.Trending {
                         SingleMovieView(movie: trending[self.selectedIndex!])

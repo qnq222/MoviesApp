@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieDetailView<T: Movie>: View {
     
+    @State private var showSeats: Bool = false
     var movie: T
     
     var body: some View {
@@ -37,7 +38,7 @@ struct MovieDetailView<T: Movie>: View {
     
     // MARK: - genre list:
     func createGenreList() -> some View {
-        return ScrollView(.horizontal) {
+        return ScrollView(.horizontal, showsIndicators: false) {
             HStack{
                 ForEach(self.movie.genres, id: \.self){ genre in
                     Text(genre)
@@ -47,6 +48,7 @@ struct MovieDetailView<T: Movie>: View {
                         .background(Color.lightGray)
                         .cornerRadius(10)
                         .foregroundColor(Color.gray)
+                        
                 }
             }
         }
@@ -59,7 +61,11 @@ struct MovieDetailView<T: Movie>: View {
     
     // MARK: - select seats button:
     func createChooseSeatButton() -> some View {
-        return MyButton(text: "Choose seats") {}
+        return MyButton(text: "Choose seats") {
+            self.showSeats.toggle()
+        }.sheet(isPresented: self.$showSeats) {
+            SeatsChoiceView(movie: self.movie)
+        }
     }
 }
 
